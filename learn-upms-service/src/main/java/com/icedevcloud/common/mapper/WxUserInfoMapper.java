@@ -17,10 +17,4 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface WxUserInfoMapper extends BaseMapper<WxUserInfo> {
 
-    IPage<WxUserInfo> userInfoPage(Page<WxUserInfo> wxUserInfoPageRespDtoPage, @Param("nickName") String nickName,
-                                   @Param("phoneNumber")String phoneNumber, @Param("birthDateStartStr") String birthDateStartStr,
-                                   @Param("birthDateEndStr") String birthDateEndStr, @Param("degreeMin") Integer degreeMin,
-                                   @Param("degreeMax") Integer degreeMax, @Param("cityAreaCode") String cityAreaCode,
-                                   @Param("areaCode") String areaCode, @Param("gender") Integer gender);
-
 }

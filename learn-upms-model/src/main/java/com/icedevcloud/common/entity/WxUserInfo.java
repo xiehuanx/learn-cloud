@@ -58,23 +58,6 @@ public class WxUserInfo implements Serializable {
     @ApiModelProperty(value = "显示 country，province，city 所用的语言")
     private String language;
 
-    @ApiModelProperty(value = "身高")
-    private Integer height;
-
-    @ApiModelProperty(value = "体重")
-    private Integer weight;
-
-    @ApiModelProperty(value = "学历")
-    private Integer degree;
-
-    @ApiModelProperty(value = "出生年月")
-    @JsonFormat(pattern = "yyyy-MM", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM")
-    private Date birthDate;
-
-    @ApiModelProperty(value = "星座")
-    private Integer constellation;
-
     @ApiModelProperty(value = "用户性别 0 未知 1 男性 2 女性")
     private Integer gender;
 
@@ -98,38 +81,15 @@ public class WxUserInfo implements Serializable {
     @TableField(exist = false)
     private String areaCodeStr;
 
-    @ApiModelProperty(value = "关于我")
-    private String aboutMe;
+    @ApiModelProperty(value = "真实姓名")
+    private String realName;
 
-    @ApiModelProperty(value = "CP身高最小值")
-    private Integer cpHeightMin;
+    @ApiModelProperty(value = "积分")
+    private Integer integral;
 
-    @ApiModelProperty(value = "CP身高最大值")
-    private Integer cpHeightMax;
+    @ApiModelProperty(value = "邀请码")
+    private String invitationCode;
 
-    @ApiModelProperty(value = "CP体重最小值")
-    private Integer cpWeightMin;
-
-    @ApiModelProperty(value = "CP体重最大值")
-    private Integer cpWeightMax;
-
-    @ApiModelProperty(value = "CP学历最小值")
-    private Integer cpDegreeMin;
-
-    @ApiModelProperty(value = "CP学历最大值")
-    private Integer cpDegreeMax;
-
-    @ApiModelProperty(value = "CP出生年最小值")
-    private String cpBirthYearMin;
-
-    @ApiModelProperty(value = "CP出生年最大值")
-    private String cpBirthYearMax;
-
-    @ApiModelProperty(value = "CP星座")
-    private Integer cpConstellation;
-
-    @ApiModelProperty(value = "CP一句话")
-    private String cpContent;
 
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

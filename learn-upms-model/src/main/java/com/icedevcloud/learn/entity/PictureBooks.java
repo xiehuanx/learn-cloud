@@ -41,8 +41,7 @@ public class PictureBooks implements Serializable {
     @ApiModelProperty(value = "绘本pdf地址")
     private String pictureBookPdfUrl;
 
-    @ApiModelProperty(value = "绘本音频，保留字段，应该不会用；
-音频和pdf处于相同的位置，前端主动去拼接地址")
+    @ApiModelProperty(value = "绘本音频，保留字段，应该不会用； 音频和pdf处于相同的位置，前端主动去拼接地址")
     private String pictureBookAudioUrl;
 
     @ApiModelProperty(value = "=0,3-6岁；=1，6-9岁")

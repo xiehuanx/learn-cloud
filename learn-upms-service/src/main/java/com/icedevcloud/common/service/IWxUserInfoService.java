@@ -44,11 +44,6 @@ public interface IWxUserInfoService extends IService<WxUserInfo> {
      */
     WxUserInfo currentUserInfo(Long id);
 
-    /**
-     * 分页查询活动订单中的用户数据
-     * @param wxUserInfoPageReqDto
-     * @return
-     */
-    IPage<WxUserInfo> userInfoPage(WxUserInfoPageReqDto wxUserInfoPageReqDto);
+
 
 }

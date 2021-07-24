@@ -32,21 +32,6 @@ public class WxUSerInfoController {
     @Autowired
     private IWxUserInfoService iWxUserInfoService;
 
-    /**
-     * 分页查询用户数据
-     * @param wxUserInfoPageReqDto
-     * @return
-     */
-    @PostMapping("queryPage")
-    public R<IPage<WxUserInfo>> queryWxUSerInfo(@RequestBody WxUserInfoPageReqDto wxUserInfoPageReqDto) {
-        if (!StrUtil.isBlank(wxUserInfoPageReqDto.getQueryParam().getBirthDateEndStr())) {
-            wxUserInfoPageReqDto.getQueryParam().setBirthDateEndStr(wxUserInfoPageReqDto.getQueryParam().getBirthDateEndStr() + "-01-01 00:00:00");
-        }
-        if (!StrUtil.isBlank(wxUserInfoPageReqDto.getQueryParam().getBirthDateStartStr())) {
-            wxUserInfoPageReqDto.getQueryParam().setBirthDateStartStr(wxUserInfoPageReqDto.getQueryParam().getBirthDateStartStr() + "-01-01 00:00:00");
-        }
-        return R.ok(iWxUserInfoService.userInfoPage(wxUserInfoPageReqDto));
-    }
 
     /**
      * 根据逐渐查询用户信息

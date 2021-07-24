@@ -107,19 +107,4 @@ public class WxUserInfoServiceImpl extends ServiceImpl<WxUserInfoMapper, WxUserI
         return wxUserInfo;
     }
 
-    @Override
-    public IPage<WxUserInfo> userInfoPage(WxUserInfoPageReqDto wxUserInfoPageReqDto) {
-        Page<WxUserInfo> page = new Page<>(wxUserInfoPageReqDto.getCurrent(), wxUserInfoPageReqDto.getPageSize());
-        WxUserInfoPageReqDto.QueryParam queryParam = wxUserInfoPageReqDto.getQueryParam();
-        IPage<WxUserInfo> activityOrderByPageRespDtoIPage = wxUserInfoMapper.userInfoPage(page, queryParam.getNickName(),
-                queryParam.getPhoneNumber(), queryParam.getBirthDateStartStr(), queryParam.getBirthDateEndStr(), queryParam.getDegreeMin(),
-                queryParam.getDegreeMax(), queryParam.getCityAreaCode(), queryParam.getAreaCode(), queryParam.getGender());
-        for (WxUserInfo record : activityOrderByPageRespDtoIPage.getRecords()) {
-            String[] split = record.getCityAreaCode().split(",");
-            record.setCityAreaCode(BaseAreaController.map.get(split[0]) + "-" + BaseAreaController.map.get(split[1]));
-            record.setAreaCode(BaseAreaController.map.get(record.getAreaCode()));
-        }
-        return activityOrderByPageRespDtoIPage;
-    }
-
 }
