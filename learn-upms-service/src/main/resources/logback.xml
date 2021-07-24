@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<jmxConfigurator />
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS}[%X{logTraceId}] [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<springProperty scope="context" name="log.name" source="log.name"/>
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>ice.log</file>
+		<!-- 按每天滚动文件，如果一天内达到10M也会滚动文件, 滚动文件将会压缩成zip格式 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>cp-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>30MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<!-- 独立的pattern -->
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS}[%X{logTraceId}] [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 配置异步日志 -->
+	<appender name="CONSOLE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="console"/>
+	</appender>
+	<appender name="ROLLING_FILE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="rollingFile"/>
+	</appender>
+	<!-- root -->
+	<root level="INFO">
+		<appender-ref ref="CONSOLE_ASYNC" />
+		<appender-ref ref="ROLLING_FILE_ASYNC" />
+	</root>
+</configuration>

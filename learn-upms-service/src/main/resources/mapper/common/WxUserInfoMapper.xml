@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icedevcloud.common.mapper.WxUserInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.icedevcloud.common.entity.WxUserInfo">
+        <id column="id" property="id" />
+        <result column="open_id" property="openId" />
+        <result column="union_id" property="unionId" />
+        <result column="nick_name" property="nickName" />
+        <result column="avatar_url" property="avatarUrl" />
+        <result column="country" property="country" />
+        <result column="city" property="city" />
+        <result column="province" property="province" />
+        <result column="language" property="language" />
+        <result column="height" property="height" />
+        <result column="weight" property="weight" />
+        <result column="degree" property="degree" />
+        <result column="birth_date" property="birthDate" />
+        <result column="constellation" property="constellation" />
+        <result column="gender" property="gender" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="wechat_number" property="wechatNumber" />
+        <result column="city_area_code" property="cityAreaCode" />
+        <result column="area_code" property="areaCode" />
+        <result column="about_me" property="aboutMe" />
+        <result column="cp_height_min" property="cpHeightMin" />
+        <result column="cp_height_max" property="cpHeightMax" />
+        <result column="cp_weight_min" property="cpWeightMin" />
+        <result column="cp_weight_max" property="cpWeightMax" />
+        <result column="cp_degree_min" property="cpDegreeMin" />
+        <result column="cp_degree_max" property="cpDegreeMax" />
+        <result column="cp_birth_year_min" property="cpBirthYearMin" />
+        <result column="cp_birth_year_max" property="cpBirthYearMax" />
+        <result column="cp_constellation" property="cpConstellation" />
+        <result column="cp_content" property="cpContent" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, open_id, union_id, nick_name, avatar_url, country, city, province, language, height, weight, degree, birth_date, constellation, gender, phone_number, wechat_number, city_area_code, area_code, about_me, cp_height_min, cp_height_max, cp_weight_min, cp_weight_max, cp_degree_min, cp_degree_max, cp_birth_year_min, cp_birth_year_max, cp_constellation, cp_content, gmt_create, gmt_modified
+    </sql>
+
+    <select id="userInfoPage" resultType="com.icedevcloud.common.entity.WxUserInfo">
+        SELECT
+        a.id,
+        a.open_id,
+        a.union_id,
+        a.nick_name,
+        a.avatar_url,
+        a.country,
+        a.city,
+        a.province,
+        a.LANGUAGE,
+        b.height,
+        b.weight,
+        b.degree,
+        b.birth_date,
+        b.constellation,
+        b.gender,
+        b.phone_number,
+        b.wechat_number,
+        b.city_area_code,
+        b.area_code,
+        b.about_me,
+        b.cp_height_min,
+        b.cp_height_max,
+        b.cp_weight_min,
+        b.cp_weight_max,
+        b.cp_degree_min,
+        b.cp_degree_max,
+        b.cp_birth_year_min,
+        b.cp_birth_year_max,
+        b.cp_constellation,
+        b.cp_content,
+        a.gmt_create,
+        a.gmt_modified
+        FROM
+        wx_user_info a
+        LEFT JOIN (
+        SELECT
+        *
+        FROM
+        cp_activity_order
+        WHERE
+        id IN ( SELECT max( id ) FROM cp_activity_order GROUP BY user_id )) b ON a.id = b.user_id
+        WHERE b.order_no is not NULL
+        <if test="nickName != null and nickName != ''">
+            and a.nick_name   LIKE CONCAT('%',CONCAT(#{nickName},'%'))
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            and b.phone_number = #{phoneNumber}
+        </if>
+        <if test="birthDateStartStr != null and birthDateStartStr != ''">
+            and b.birth_date >= #{birthDateStartStr}
+        </if>
+        <if test="birthDateEndStr != null and birthDateEndStr != ''">
+            and   #{birthDateEndStr} >= b.birth_date
+        </if>
+        <if test="degreeMax != null">
+            and  #{degreeMax} >= b.degree
+        </if>
+        <if test="degreeMin != null">
+            and b.degree >= #{degreeMin}
+        </if>
+
+        <if test="cityAreaCode != null and cityAreaCode != ''">
+            and b.city_area_code   LIKE CONCAT('%',CONCAT(#{cityAreaCode},'%'))
+        </if>
+
+        <if test="areaCode != null and areaCode != ''">
+            and a.area_code   LIKE CONCAT('%',CONCAT(#{areaCode},'%'))
+        </if>
+
+        <if test="gender != null">
+            and b.gender = #{gender}
+        </if>
+        ORDER BY a.gmt_create desc
+    </select>
+
+</mapper>

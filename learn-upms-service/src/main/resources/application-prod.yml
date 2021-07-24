@@ -1,0 +1,64 @@
+server:
+  port: 5001
+
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    # database: 3
+    password: Lzywy.123
+  datasource:
+    # type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://47.108.196.94:3306/cp?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/cp?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: cp
+    password: dsRk85MYPsTfDt7j
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      max-lifetime: 0
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+wx:
+  mp:
+    configs:
+      - appId: wx88c75ddb7c18587e # 第一个公众号的appid
+        secret: 930b82455f57ef4fb5d45f9536166f06 # 公众号的appsecret
+        token: 111 # 接口配置里的Token值
+        aesKey: 111 # 接口配置里的EncodingAESKey值
+  miniapp:
+    configs:
+      #微信小程序的appid
+      - appid: wx123123
+        #微信小程序的Secret
+        secret: wx123123
+        token: #微信小程序消息服务器配置的token
+        aesKey: #微信小程序消息服务器配置的EncodingAESKey
+        msgDataFormat: JSON
+        spbillCreateIp: 111.230.70.100
+  pay:
+    appId: wx88c75ddb7c18587e #微信公众号或者小程序等的appid
+    mchId: 1586237971 #微信支付商户号
+    mchKey: Wxf80magic2020kingbearfly2021041 #微信支付商户密钥
+    #    subAppId: #服务商模式下的子商户公众账号ID
+    #    subMchId: #服务商模式下的子商户号
+    keyPath: classpath:apiclient_cert.p12 # p12证书的位置，可以指定绝对路径，也可以指定类路径（以classpath:开头）
+pay:
+  wxNotifyUrl: http://yunqixinan.com:5001/notify/wx/notify/order
+  wxRefundNotifyUrl: http://yunqixinan.com:5001/notify/wx/refundNotify/order
+
+qcloud:
+  secret-id: AKIDqbGfpje5g1DLDbBbDaMdrpYfYDBtqZIj
+  secret-key: SDzUjiRwZwAI99i1HGzZ3vEOHtEvLVP2
+  region-name: ap-chengdu
+  bucket-name: lzywy-1254323486
+  domain-name: https://lzywy-1254323486.cos.ap-chengdu.myqcloud.com/

@@ -1,0 +1,40 @@
+spring:
+  profiles:
+    active: dev
+  mail:
+    host: smtp.exmail.qq.com
+    username: service@cqlhkjwwgc.onexmail.com
+    password: WoZnX9okfei4oqfS
+
+jwt:
+  config:
+    secret: E852CB4903D411EBA1379C7DA384E7F3
+    ttl: 86400000
+    license: cp-cloud
+
+logbook:
+  write:
+    level: debug #logbook日志输入级别
+  format:
+    style: json #这个值还可以是 http、json等
+
+ignore:
+  urls:
+    - /actuator/**
+    - /oauth/**
+    - /doc.html
+    - /webjars/**
+    - /swagger-resources/**
+    - /v2/api-docs
+    - /api/**
+    - /xWRZYAtHQF.txt
+    - /notify/**
+    - /MP_verify_pxSBZ4JHt018Whoh.txt
+    - /cp/activityOrder/**
+    - /cp/activity/activityOrderSummaryByPageExcel/**
+
+logging:
+#  config: classpath:logback.xml
+  level:
+    org.zalando.logbook: DEBUG
+    com: DEBUG

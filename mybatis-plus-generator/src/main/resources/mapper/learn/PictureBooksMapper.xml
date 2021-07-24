@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icedevcloud.learn.mapper.PictureBooksMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.icedevcloud.learn.entity.PictureBooks">
+        <id column="id" property="id" />
+        <result column="picture_book_name" property="pictureBookName" />
+        <result column="picture_book_img_url" property="pictureBookImgUrl" />
+        <result column="picture_book_pdf_url" property="pictureBookPdfUrl" />
+        <result column="picture_book_audio_url" property="pictureBookAudioUrl" />
+        <result column="picture_book_type" property="pictureBookType" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, picture_book_name, picture_book_img_url, picture_book_pdf_url, picture_book_audio_url, picture_book_type, gmt_create, gmt_modified
+    </sql>
+
+</mapper>
