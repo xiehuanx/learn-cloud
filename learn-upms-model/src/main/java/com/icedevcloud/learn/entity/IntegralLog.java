@@ -38,7 +38,7 @@ public class IntegralLog implements Serializable {
     @ApiModelProperty(value = "用户id")
     private Long userId;
 
-    @ApiModelProperty(value = "该题的积分")
+    @ApiModelProperty(value = "该题的积分 答对为1；答错为0")
     private Integer integral;
 
     @ApiModelProperty(value = "创建时间")
