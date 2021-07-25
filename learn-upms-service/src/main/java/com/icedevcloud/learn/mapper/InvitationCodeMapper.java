@@ -1,6 +1,6 @@
 package com.icedevcloud.learn.mapper;
 
-import com.icedevcloud.learn.entity.Grade;
+import com.icedevcloud.learn.entity.InvitationCode;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-25
  */
-public interface GradeMapper extends BaseMapper<Grade> {
+public interface InvitationCodeMapper extends BaseMapper<InvitationCode> {
 
 }
