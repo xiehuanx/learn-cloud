@@ -17,8 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan({
         "com.icedevcloud.upms.mapper",
         "com.icedevcloud.common.mapper",
-        "com.icedevcloud.paycenter.mapper",
-        "com.icedevcloud.cp.mapper"
+        "com.icedevcloud.learn.mapper"
 })
 public class MybatisPlusConfig {
 

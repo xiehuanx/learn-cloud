@@ -10,9 +10,9 @@ spring:
   datasource:
     # type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://gz-cdb-qlqtn6j8.sql.tencentcdb.com:63816/cp?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
-    username: dev
-    password: XGC$LROG93299XNM
+    url: jdbc:mysql://sh-cdb-4tu4mj0t.sql.tencentcdb.com:63257/eng?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: daxing
+    password: daxing!3
     hikari:
       minimum-idle: 5
       maximum-pool-size: 10
