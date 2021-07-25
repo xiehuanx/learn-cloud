@@ -1,6 +1,6 @@
 package com.icedevcloud.learn.mapper;
 
-import com.icedevcloud.learn.entity.Curriculum;
+import com.icedevcloud.learn.entity.IntegralLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-25
  */
-public interface CurriculumMapper extends BaseMapper<Curriculum> {
+public interface IntegralLogMapper extends BaseMapper<IntegralLog> {
 
 }

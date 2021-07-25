@@ -4,12 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.icedevcloud.learn.entity.InvitationCode">
-        <result column="Invitation_code" property="invitationCode" />
+        <result column="invitation_code" property="invitationCode" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        Invitation_code
+        invitation_code
     </sql>
 
 </mapper>

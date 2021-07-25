@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-07-24
  */
 @RestController
-@RequestMapping("/learn/picture-books")
+@RequestMapping("/learn/pictureBooks")
 public class PictureBooksController {
 
 }

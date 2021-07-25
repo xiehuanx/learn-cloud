@@ -1,6 +1,6 @@
 package com.icedevcloud.learn.service;
 
-import com.icedevcloud.learn.entity.Grade;
+import com.icedevcloud.learn.entity.IntegralLog;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-25
  */
-public interface IGradeService extends IService<Grade> {
+public interface IIntegralLogService extends IService<IntegralLog> {
 
 }

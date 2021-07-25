@@ -40,10 +40,10 @@ public class Question implements Serializable {
     private Long curriculumId;
 
     @ApiModelProperty(value = "正确答案")
-    private Blob correctAnswer;
+    private String correctAnswer;
 
     @ApiModelProperty(value = "错误答案")
-    private Blob wrongAnswer;
+    private String wrongAnswer;
 
     @ApiModelProperty(value = "问题")
     private String question;

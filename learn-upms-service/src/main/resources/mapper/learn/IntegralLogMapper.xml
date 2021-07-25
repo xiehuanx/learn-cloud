@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.icedevcloud.learn.mapper.ChapterMapper">
+<mapper namespace="com.icedevcloud.learn.mapper.IntegralLogMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.icedevcloud.learn.entity.Chapter">
+    <resultMap id="BaseResultMap" type="com.icedevcloud.learn.entity.IntegralLog">
         <id column="id" property="id" />
-        <result column="chapter_name" property="chapterName" />
-        <result column="grade_id" property="gradeId" />
+        <result column="question_id" property="questionId" />
+        <result column="user_id" property="userId" />
+        <result column="integral" property="integral" />
         <result column="gmt_create" property="gmtCreate" />
         <result column="gmt_modified" property="gmtModified" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, chapter_name, grade_id, gmt_create, gmt_modified
+        id, question_id, user_id, integral, gmt_create, gmt_modified
     </sql>
 
 </mapper>

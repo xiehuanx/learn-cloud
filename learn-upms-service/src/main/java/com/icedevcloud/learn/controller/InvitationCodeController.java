@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-07-25
  */
 @RestController
-@RequestMapping("/learn/invitation-code")
+@RequestMapping("/learn/invitationCode")
 public class InvitationCodeController {
 
 }

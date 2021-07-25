@@ -24,7 +24,7 @@ public class InvitationCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableField("Invitation_code")
+    @TableField("invitation_code")
     private String invitationCode;
 
 

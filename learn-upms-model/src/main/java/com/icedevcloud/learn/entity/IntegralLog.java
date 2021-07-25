@@ -17,14 +17,14 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("learn_curriculum")
-@ApiModel(value="Curriculum对象", description="")
-public class Curriculum implements Serializable {
+@TableName("learn_integral_log")
+@ApiModel(value="IntegralLog对象", description="")
+public class IntegralLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,17 +32,20 @@ public class Curriculum implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "课程名（一个章节下，有很多课程）")
-    private String curriculumName;
+    @ApiModelProperty(value = "问题id")
+    private Long questionId;
+
+    @ApiModelProperty(value = "用户id")
+    private Long userId;
+
+    @ApiModelProperty(value = "该题的积分")
+    private Integer integral;
 
     @ApiModelProperty(value = "创建时间")
     private Date gmtCreate;
 
     @ApiModelProperty(value = "更新时间")
     private Date gmtModified;
-
-    @ApiModelProperty(value = "章节id")
-    private Long chapterId;
 
 
 }

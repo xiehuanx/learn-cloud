@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-25
  */
 @RestController
-@RequestMapping("/learn/curriculum")
-public class CurriculumController {
+@RequestMapping("/learn/integralLog")
+public class IntegralLogController {
 
 }
