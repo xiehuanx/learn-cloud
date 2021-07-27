@@ -40,7 +40,7 @@
         <weixin-java-miniapp.version>4.0.0</weixin-java-miniapp.version>
         <weixin-java-pay.version>4.0.0</weixin-java-pay.version>
         <fastjson.version>1.2.73</fastjson.version>
-        <lombok.version>1.18.8</lombok.version>
+        <lombok.version>1.18.20</lombok.version>
     </properties>
 
     <dependencies>

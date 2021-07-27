@@ -1,6 +1,6 @@
 package com.icedevcloud.learn.mapper;
 
-import com.icedevcloud.learn.entity.Question;
+import com.icedevcloud.learn.entity.Exercises;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-27
  */
-public interface QuestionMapper extends BaseMapper<Question> {
+public interface ExercisesMapper extends BaseMapper<Exercises> {
 
 }

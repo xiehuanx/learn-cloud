@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-27
  */
 @RestController
-@RequestMapping("/learn/grade")
-public class GradeController {
+@RequestMapping("/learn/exercises")
+public class ExercisesController {
 
 }

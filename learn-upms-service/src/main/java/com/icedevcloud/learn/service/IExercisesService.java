@@ -1,6 +1,6 @@
 package com.icedevcloud.learn.service;
 
-import com.icedevcloud.learn.entity.Question;
+import com.icedevcloud.learn.entity.Exercises;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-27
  */
-public interface IQuestionService extends IService<Question> {
+public interface IExercisesService extends IService<Exercises> {
 
 }

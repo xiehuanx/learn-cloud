@@ -18,14 +18,14 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-24
+ * @since 2021-07-27
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("learn_question")
-@ApiModel(value="Question对象", description="")
-public class Question implements Serializable {
+@TableName("learn_exercises")
+@ApiModel(value="Exercises对象", description="")
+public class Exercises implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,20 +33,23 @@ public class Question implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "问题类型，目前有9种，那么值就是1-9")
-    private Integer questionType;
-
     @ApiModelProperty(value = "课程id")
     private Long curriculumId;
+
+    @ApiModelProperty(value = "juvenile - 少儿；child-幼儿")
+    private String ageType;
+
+    @ApiModelProperty(value = "问题类型，")
+    private Integer exerciseType;
+
+    @ApiModelProperty(value = "练习题题目，可以是音频，可以是图片，可以是文字")
+    private String exerciseTitle;
 
     @ApiModelProperty(value = "正确答案")
     private Blob correctAnswer;
 
     @ApiModelProperty(value = "错误答案")
     private Blob wrongAnswer;
-
-    @ApiModelProperty(value = "问题")
-    private String question;
 
     @ApiModelProperty(value = "创建时间")
     private Date gmtCreate;
