@@ -59,10 +59,10 @@ public class Exercises implements Serializable {
     private String exerciseTitle;
 
     @ApiModelProperty(value = "正确答案")
-    private Blob correctAnswer;
+    private String correctAnswer;
 
     @ApiModelProperty(value = "错误答案")
-    private Blob wrongAnswer;
+    private String wrongAnswer;
 
     @ApiModelProperty(value = "创建时间")
     private Date gmtCreate;
