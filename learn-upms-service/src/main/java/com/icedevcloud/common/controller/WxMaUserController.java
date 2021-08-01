@@ -58,12 +58,14 @@ public class WxMaUserController {
 
     /**
      * 保存用户的邀请码
-     * @param wxUserInfo 用户信息
+     * @param invitationCode 邀请码
      * @return true
      */
     @ApiOperation(value = "保存用户邀请码")
     @PostMapping("/saveUserInvitationCode")
-    public R<Boolean> saveUserInvitationCode(@RequestBody WxUserInfo wxUserInfo) {
+    public R<Boolean> saveUserInvitationCode(@RequestParam("invitationCode") String  invitationCode) {
+        WxUserInfo wxUserInfo = new WxUserInfo();
+        wxUserInfo.setInvitationCode(invitationCode);
         wxUserInfo.setId(iTokenManager.getCurrentUserInfo().getId());
         return R.ok(iWxUserInfoService.updateById(wxUserInfo));
     }
