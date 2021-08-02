@@ -3,10 +3,10 @@ server:
 
 spring:
   redis:
-    host: 111.230.70.100
+    host: 114.117.162.48
     port: 6379
     database: 3
-    password: redis2019$
+    password: xiehuan
   datasource:
     # type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -56,8 +56,8 @@ pay:
   wxRefundNotifyUrl: http://139.155.46.177:5001/notify/wx/refundNotify/order
 
 qcloud:
-  secret-id: AKIDqbGfpje5g1DLDbBbDaMdrpYfYDBtqZIj
-  secret-key: SDzUjiRwZwAI99i1HGzZ3vEOHtEvLVP2
-  region-name: ap-chengdu
-  bucket-name: lzywy-1254323486
-  domain-name: https://lzywy-1254323486.cos.ap-chengdu.myqcloud.com
+  secret-id: AKIDIQIyRdYCZfT0GFxOXT8XfW6PQAeqlPmt
+  secret-key: rRkmY3HFwMVNyIL7cqnTt2vXtxkGUR7W
+  region-name: ap-chongqing
+  bucket-name: lhkj-1252013013
+  domain-name: https://lhkj-1252013013.cos.ap-chongqing.myqcloud.com/

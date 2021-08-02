@@ -1,8 +1,8 @@
 package com.icedevcloud.learn.service.impl;
 
-import com.google.common.collect.Lists;
-
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.icedevcloud.common.service.ITokenManager;
+import com.icedevcloud.learn.IndexDataInfoDTO;
+import com.icedevcloud.learn.dto.LearnExercisesLogDTO;
 import com.icedevcloud.learn.dto.child.ChildChooseOneDTO;
 import com.icedevcloud.learn.dto.child.ChildChooseTwoDTO;
 import com.icedevcloud.learn.dto.child.ChildFindOneDTO;
@@ -15,12 +15,19 @@ import com.icedevcloud.learn.entity.Exercises;
 import com.icedevcloud.learn.mapper.ExercisesMapper;
 import com.icedevcloud.learn.service.IExercisesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,15 +40,42 @@ import java.util.List;
 @Service
 public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises> implements IExercisesService {
 
+    @Autowired
+    private ExercisesMapper exercisesMapper;
+
+    @Autowired
+    private ITokenManager iTokenManager;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public static Map<Integer, Integer> sumGroupbyGradeMap = new HashMap<>();
+
     @Override
-    public <T> T getExercises(Integer curriculumId, Integer exerciseType, String ageType) {
-        List<Exercises> exercisesList = this.list(Wrappers.<Exercises>lambdaQuery().eq(Exercises::getCurriculumId, curriculumId)
-                .eq(Exercises::getExerciseType, exerciseType).eq(Exercises::getAgeType, ageType));
+    public <T> T getExercises(Long curriculumId, Integer exerciseType, String ageType) {
+        List<LearnExercisesLogDTO> exercisesList = exercisesMapper.selectExercisesLog(curriculumId, ageType, exerciseType, iTokenManager.getCurrentUserInfo().getId());
         Assert.isNull(exercisesList, "数据为空，请录入数据");
         return getList(exerciseType, ageType, exercisesList);
     }
 
-    private <T> T getList(Integer exerciseType, String ageType, List<Exercises> exercisesList) {
+    @Override
+    public IndexDataInfoDTO getIndexDataInfo(Long gradeId) {
+        //获取天数
+        IndexDataInfoDTO indexDataInfoDTO = exercisesMapper.getDays(iTokenManager.getCurrentUserInfo().getId());
+        //获取到的这本书的题总数
+        Integer integer = sumGroupbyGradeMap.get(gradeId.intValue());
+        // 这个用户做了多少道题
+        Integer countLogByGradeIdAndUserId = exercisesMapper.getCountLogByGradeIdAndUserId(gradeId, iTokenManager.getCurrentUserInfo().getId());
+        if (countLogByGradeIdAndUserId == 0) {
+            indexDataInfoDTO.setSpeed("0");
+        } else {
+            double doubleValue = BigDecimal.valueOf(countLogByGradeIdAndUserId).divide(BigDecimal.valueOf(integer), 2, RoundingMode.HALF_UP).doubleValue();
+            indexDataInfoDTO.setSpeed(String.valueOf(doubleValue));
+        }
+        return indexDataInfoDTO;
+    }
+
+    private <T> T getList(Integer exerciseType, String ageType, List<LearnExercisesLogDTO> exercisesList) {
         switch (ageType) {
             case "child":
                 return getListByExerciseTypeForChild(exerciseType, exercisesList);
@@ -59,7 +93,7 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param exercisesList 输入数据
      * @param <T>           返回数据
      */
-    public <T> T getListByExerciseTypeForChild(Integer exerciseType, List<Exercises> exercisesList) {
+    public <T> T getListByExerciseTypeForChild(Integer exerciseType, List<LearnExercisesLogDTO> exercisesList) {
         switch (exerciseType) {
             case 1:
                 return getListByExerciseTypeForChildChooseOne(exercisesList);
@@ -83,9 +117,9 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param <T>           需要返回的数据
      * @return 重新映射后的数据
      */
-    public <T> T getListByExerciseTypeForChildChooseOne(List<Exercises> exercisesList) {
+    public <T> T getListByExerciseTypeForChildChooseOne(List<LearnExercisesLogDTO> exercisesList) {
         List<ChildChooseOneDTO> childChooseOneDTOList = new ArrayList<>();
-        for (Exercises exercises : exercisesList) {
+        for (LearnExercisesLogDTO exercises : exercisesList) {
             ChildChooseOneDTO childChooseOneDTO = new ChildChooseOneDTO();
             childChooseOneDTO.setAudioUrl(exercises.getExerciseTitle());
             childChooseOneDTO.setRightWord(exercises.getCorrectAnswer());
@@ -103,9 +137,9 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param <T>           需要返回的数据
      * @return 重新映射后的数据
      */
-    public <T> T getListByExerciseTypeForChildChooseTwo(List<Exercises> exercisesList) {
+    public <T> T getListByExerciseTypeForChildChooseTwo(List<LearnExercisesLogDTO> exercisesList) {
         List<ChildChooseTwoDTO> childChooseTwoDTOS = new ArrayList<>();
-        for (Exercises exercises : exercisesList) {
+        for (LearnExercisesLogDTO exercises : exercisesList) {
             ChildChooseTwoDTO childChooseTwoDTO = new ChildChooseTwoDTO();
             childChooseTwoDTO.setImageUrl(exercises.getExerciseTitle());
             childChooseTwoDTO.setRightWord(exercises.getCorrectAnswer());
@@ -123,9 +157,9 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param <T>           需要返回的数据
      * @return 重新映射后的数据
      */
-    public <T> T getListByExerciseTypeForChildFindOne(List<Exercises> exercisesList) {
+    public <T> T getListByExerciseTypeForChildFindOne(List<LearnExercisesLogDTO> exercisesList) {
         List<ChildFindOneDTO> childFindOneDTOList = new ArrayList<>();
-        for (Exercises exercises : exercisesList) {
+        for (LearnExercisesLogDTO exercises : exercisesList) {
             ChildFindOneDTO childFindOneDTO = new ChildFindOneDTO();
             childFindOneDTO.setWord(exercises.getExerciseTitle());
             childFindOneDTO.setRightImageUrl(exercises.getCorrectAnswer());
@@ -143,9 +177,9 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param <T>           需要返回的数据
      * @return 重新映射后的数据
      */
-    public <T> T getListByExerciseTypeForChildFindTwo(List<Exercises> exercisesList) {
+    public <T> T getListByExerciseTypeForChildFindTwo(List<LearnExercisesLogDTO> exercisesList) {
         List<ChildFindTwoDTO> childFindTwoDTOS = new ArrayList<>();
-        for (Exercises exercises : exercisesList) {
+        for (LearnExercisesLogDTO exercises : exercisesList) {
             ChildFindTwoDTO childFindTwoDTO = new ChildFindTwoDTO();
             childFindTwoDTO.setAudioUrl(exercises.getExerciseTitle());
             childFindTwoDTO.setRightImageUrl(exercises.getCorrectAnswer());
@@ -163,9 +197,9 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param <T>           需要返回的数据
      * @return 重新映射后的数据
      */
-    public <T> T getListByExerciseTypeForChildFollow(List<Exercises> exercisesList) {
+    public <T> T getListByExerciseTypeForChildFollow(List<LearnExercisesLogDTO> exercisesList) {
         List<ChildFollowDTO> childFollowDTOS = new ArrayList<>();
-        for (Exercises exercises : exercisesList) {
+        for (LearnExercisesLogDTO exercises : exercisesList) {
             ChildFollowDTO childFollowDTO = new ChildFollowDTO();
             childFollowDTO.setWord(exercises.getExerciseTitle());
             childFollowDTOS.add(childFollowDTO);
@@ -181,7 +215,7 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param exercisesList 输入数据
      * @param <T>           返回数据
      */
-    private <T> T getListByExerciseTypeForJuvenile(Integer exerciseType, List<Exercises> exercisesList) {
+    private <T> T getListByExerciseTypeForJuvenile(Integer exerciseType, List<LearnExercisesLogDTO> exercisesList) {
         switch (exerciseType) {
             case 1:
                 return getListByExerciseTypeForJuvenileChooseWord(exercisesList);
@@ -194,9 +228,9 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
         }
     }
 
-    private <T> T getListByExerciseTypeForJuvenileChooseWord(List<Exercises> exercisesList) {
+    private <T> T getListByExerciseTypeForJuvenileChooseWord(List<LearnExercisesLogDTO> exercisesList) {
         List<JuvenileChooseWordDTO> juvenileChooseWordDTOS = new ArrayList<>();
-        for (Exercises exercises : exercisesList) {
+        for (LearnExercisesLogDTO exercises : exercisesList) {
             JuvenileChooseWordDTO juvenileChooseWordDTO = new JuvenileChooseWordDTO();
             juvenileChooseWordDTO.setComments(exercises.getExerciseTitle());
             juvenileChooseWordDTO.setRightWord(exercises.getCorrectAnswer());
@@ -214,9 +248,9 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param <T>           需要返回的数据
      * @return 重新映射后的数据
      */
-    private <T> T getListByExerciseTypeForJuvenileEliminate(List<Exercises> exercisesList) {
+    private <T> T getListByExerciseTypeForJuvenileEliminate(List<LearnExercisesLogDTO> exercisesList) {
         List<JuvenileEliminateDTO> juvenileEliminateDTOS = new ArrayList<>();
-        for (Exercises exercises : exercisesList) {
+        for (LearnExercisesLogDTO exercises : exercisesList) {
             JuvenileEliminateDTO juvenileEliminateDTO = new JuvenileEliminateDTO();
             String[] strings1 = exercises.getCorrectAnswer().split(";");
             juvenileEliminateDTO.setLeftWords(Arrays.asList(strings1));
@@ -235,14 +269,27 @@ public class ExercisesServiceImpl extends ServiceImpl<ExercisesMapper, Exercises
      * @param <T>           需要返回的数据
      * @return 重新映射后的数据
      */
-    private <T> T getListByExerciseTypeForJuvenileFellow(List<Exercises> exercisesList) {
+    private <T> T getListByExerciseTypeForJuvenileFellow(List<LearnExercisesLogDTO> exercisesList) {
         List<JuvenileFellowDTO> juvenileFellowDTOS = new ArrayList<>();
-        for (Exercises exercises : exercisesList) {
+        for (LearnExercisesLogDTO exercises : exercisesList) {
             JuvenileFellowDTO juvenileFellowDTO = new JuvenileFellowDTO();
             juvenileFellowDTO.setWord(exercises.getExerciseTitle());
             juvenileFellowDTOS.add(juvenileFellowDTO);
         }
         return (T) juvenileFellowDTOS;
+    }
+
+    /**
+     * 获取数据
+     */
+    @PostConstruct
+    public void getSumGroupbyGrade(){
+        List<IndexDataInfoDTO> sumGroupbyGrade = exercisesMapper.getSumGroupbyGrade();
+        if (sumGroupbyGrade != null && sumGroupbyGrade.size() > 0) {
+            for (IndexDataInfoDTO indexDataInfoDTO : sumGroupbyGrade) {
+                sumGroupbyGradeMap.put(indexDataInfoDTO.getDays(), Integer.parseInt(indexDataInfoDTO.getSpeed()));
+            }
+        }
     }
 
 

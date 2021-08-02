@@ -1,5 +1,7 @@
 package com.icedevcloud.learn.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.icedevcloud.learn.dto.PictureBooksByPageRequest;
 import com.icedevcloud.learn.entity.PictureBooks;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPictureBooksService extends IService<PictureBooks> {
 
+    /**
+     * 获取分页信息
+     * @param pictureBooksByPageRequest
+     * @return
+     */
+    IPage<PictureBooks> getPictureBooksByPage(PictureBooksByPageRequest pictureBooksByPageRequest);
 }

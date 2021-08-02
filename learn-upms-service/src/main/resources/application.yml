@@ -32,6 +32,8 @@ ignore:
     - /MP_verify_pxSBZ4JHt018Whoh.txt
     - /cp/activityOrder/**
     - /cp/activity/activityOrderSummaryByPageExcel/**
+    - /api/**
+    - /learn/api/**
 
 logging:
 #  config: classpath:logback.xml

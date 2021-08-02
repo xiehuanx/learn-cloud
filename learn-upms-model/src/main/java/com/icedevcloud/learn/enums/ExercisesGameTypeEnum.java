@@ -76,4 +76,8 @@ public enum ExercisesGameTypeEnum {
         return type;
     }
 
+    public String toString() {
+        return "游戏类型:" + getType() + ", 年龄类型:" + getAgeType() + ", 说明:" + getExplain();
+    }
+
 }

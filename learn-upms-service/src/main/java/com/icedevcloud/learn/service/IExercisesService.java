@@ -1,12 +1,8 @@
 package com.icedevcloud.learn.service;
 
-import com.icedevcloud.learn.dto.child.ChildChooseOneDTO;
-import com.icedevcloud.learn.dto.child.ChildChooseTwoDTO;
-import com.icedevcloud.learn.dto.child.ChildFindOneDTO;
+import com.icedevcloud.learn.IndexDataInfoDTO;
 import com.icedevcloud.learn.entity.Exercises;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
 
 /**
  * <p>
@@ -25,6 +21,12 @@ public interface IExercisesService extends IService<Exercises> {
      * @param <T> 泛型数据
      * @return 游戏数据
      */
-    <T> T getExercises(Integer curriculumId, Integer exerciseType, String ageType);
+    <T> T getExercises(Long curriculumId, Integer exerciseType, String ageType);
+
+    /**
+     * 获取用户的进度，积分，天数
+     * @return dto数据
+     */
+    IndexDataInfoDTO getIndexDataInfo(Long gradeId);
 
 }

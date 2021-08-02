@@ -4,20 +4,69 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.icedevcloud.learn.entity.Exercises">
-        <id column="id" property="id" />
-        <result column="curriculum_id" property="curriculumId" />
-        <result column="age_type" property="ageType" />
-        <result column="exercise_type" property="exerciseType" />
-        <result column="exercise_title" property="exerciseTitle" />
-        <result column="correct_answer" property="correctAnswer" />
-        <result column="wrong_answer" property="wrongAnswer" />
-        <result column="gmt_create" property="gmtCreate" />
-        <result column="gmt_modified" property="gmtModified" />
+        <id column="id" property="id"/>
+        <result column="curriculum_id" property="curriculumId"/>
+        <result column="age_type" property="ageType"/>
+        <result column="exercise_type" property="exerciseType"/>
+        <result column="exercise_title" property="exerciseTitle"/>
+        <result column="correct_answer" property="correctAnswer"/>
+        <result column="wrong_answer" property="wrongAnswer"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, curriculum_id, age_type, exercise_type, exercise_title, correct_answer, wrong_answer, gmt_create, gmt_modified
+        id
+        , curriculum_id, age_type, exercise_type, exercise_title, correct_answer, wrong_answer, gmt_create, gmt_modified
     </sql>
+
+
+    <select id="selectExercisesLog" resultType="com.icedevcloud.learn.dto.LearnExercisesLogDTO">
+        SELECT ex.*,
+               log.id
+        FROM learn_exercises ex
+                 LEFT JOIN learn_integral_log log ON ex.id = log.question_id
+        WHERE log.user_id = #{userId}
+          and ex.curriculum_id = #{curriculumId}
+          and ex.age_type = #{ageType}
+          and ex.exercise_type = #{exerciseType}
+    </select>
+
+    <select id="getDays" resultType="com.icedevcloud.learn.IndexDataInfoDTO">
+        SELECT count(*)      as days,
+               SUM(integral) as integral
+        FROM (
+                 SELECT DISTINCT DATE_FORMAT(gmt_create, '%Y%m%d'),integral
+                 FROM learn_integral_log
+                 where user_id = #{userId}
+             ) a
+    </select>
+
+
+    <select id="getSumGroupbyGrade" resultType="com.icedevcloud.learn.IndexDataInfoDTO">
+        SELECT
+            gra.id as days ,count(*)  as speed
+        FROM
+            learn_exercises ex
+                LEFT JOIN learn_curriculum cu ON ex.curriculum_id = cu.id
+                LEFT JOIN learn_chapter ch ON ch.id = cu.chapter_id
+                LEFT JOIN learn_grade gra ON gra.id = ch.grade_id
+        GROUP BY gra.id
+    </select>
+
+    <select id="getCountLogByGradeIdAndUserId" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            learn_integral_log log
+                LEFT JOIN learn_exercises ex ON ex.id = log.question_id
+	LEFT JOIN learn_curriculum cu ON ex.curriculum_id = cu.id
+            LEFT JOIN learn_chapter ch ON ch.id = cu.chapter_id
+            LEFT JOIN learn_grade gra ON gra.id = ch.grade_id
+        WHERE
+            gra.id = #{gradeId}
+          AND log.user_id = #{userId}
+    </select>
 
 </mapper>
