@@ -1,4 +1,4 @@
-package com.icedevcloud.learn.controller;
+package com.icedevcloud.learn.controller.admin;
 
 
 import com.icedevcloud.common.core.api.R;
@@ -25,15 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/learn/exercises")
 public class ExercisesController {
 
-    @Autowired
-    private IExercisesService exercisesService;
 
-    @ApiOperation(value = "获取游戏信息", notes = "获取游戏信息接口", produces = "application/json")
-    @PostMapping("/getExercises")
-    public <T> R<T> getExercises(@RequestParam("curriculumId") Integer curriculumId,
-                              @RequestParam("exerciseType") Integer exerciseType,
-                              @RequestParam("ageType") String ageType) {
-        return R.ok(exercisesService.getExercises(curriculumId, exerciseType, ageType));
-    }
+
+
 
 }

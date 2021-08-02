@@ -1,4 +1,4 @@
-package com.icedevcloud.learn.controller;
+package com.icedevcloud.learn.controller.admin;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author XiaoBingBy
- * @since 2021-07-25
+ * @since 2021-07-24
  */
 @RestController
-@RequestMapping("/learn/invitationCode")
-public class InvitationCodeController {
+@RequestMapping("/learn/pictureBooks")
+public class PictureBooksController {
 
 }

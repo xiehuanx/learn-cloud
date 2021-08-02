@@ -68,6 +68,32 @@ public class CosFileUpload {
         return qcloudCosUploadResVo;
     }
 
+
+    public QcloudCosUploadResVo uploadFile(MultipartFile multipartFile, String unit,String bookName, String fileName) throws IOException {
+        File file = new File(multipartFile.getOriginalFilename());
+
+        FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
+
+        String fileNameSuffix = getFileNameSuffix(multipartFile.getOriginalFilename());
+        String fileNameKey = bookName + "/" + unit + "/" + fileName + "." + fileNameSuffix;
+
+        PutObjectRequest putObjectRequest = new PutObjectRequest(qcloudCosProperties.getBucketName(), fileNameKey, file);
+        PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
+        file.delete();
+        String eTag = putObjectResult.getETag();
+        String crc64Ecma = putObjectResult.getCrc64Ecma();
+
+        log.info("eTag: {} crc64Ecma: {} key: {}", eTag, crc64Ecma, fileNameKey);
+
+        QcloudCosUploadResVo qcloudCosUploadResVo = new QcloudCosUploadResVo();
+        qcloudCosUploadResVo
+                .setETag(eTag)
+                .setCrc64Ecma(crc64Ecma)
+                .setKey(fileNameKey)
+                .setDomainKey(qcloudCosProperties.getDomainName() + fileNameKey);
+        return qcloudCosUploadResVo;
+    }
+
     private String getFileNameSuffix(String fileName) {
         String[] strArray = fileName.split("\\.");
         int suffixIndex = strArray.length - 1;

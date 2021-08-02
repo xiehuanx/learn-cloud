@@ -1,4 +1,4 @@
-package com.icedevcloud.learn.controller;
+package com.icedevcloud.learn.controller.admin;
 
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -30,18 +30,8 @@ import java.util.List;
 @RequestMapping("/learn/curriculum")
 public class CurriculumController {
 
-    @Autowired
-    private ICurriculumService curriculumService;
 
-    /**
-     * 通过章节id，获取课节信息
-     * @param chapterId 章节id
-     * @return 课节数据
-     */
-    @ApiOperation(value = "获取课节信息", notes = "获取章节下的获取课节信息", produces = "application/json")
-    @GetMapping("/getCurriculumByChapter/{chapterId}")
-    public R<List<Curriculum>> getCurriculumByChapter(@PathVariable(value = "chapterId") Long chapterId) {
-        return R.ok(curriculumService.list(Wrappers.<Curriculum>lambdaQuery().eq(Curriculum::getChapterId, chapterId)));
-    }
+
+
 
 }

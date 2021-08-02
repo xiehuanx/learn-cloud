@@ -1,4 +1,4 @@
-package com.icedevcloud.learn.controller;
+package com.icedevcloud.learn.controller.admin;
 
 
 import com.icedevcloud.common.core.api.R;
@@ -27,12 +27,5 @@ import java.util.List;
 @RequestMapping("/learn/grade")
 public class GradeController {
 
-    @Autowired
-    private IGradeService gradeService;
 
-    @ApiOperation(value = "获取所有年级信息", notes = "获取所有年级信息接口", produces = "application/json")
-    @GetMapping("/all")
-    public R<List<Grade>> getAllGrade() {
-        return R.ok(gradeService.list());
-    }
 }

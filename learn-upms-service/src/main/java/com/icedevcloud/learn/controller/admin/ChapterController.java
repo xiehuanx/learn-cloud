@@ -1,4 +1,4 @@
-package com.icedevcloud.learn.controller;
+package com.icedevcloud.learn.controller.admin;
 
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -32,16 +32,7 @@ public class ChapterController {
     @Autowired
     private IChapterService chapterService;
 
-    /**
-     * 通过年级id，获取章节信息
-     * @param gradeId 年级id
-     * @return 章节数据
-     */
-    @ApiOperation(value = "获取章节信息", notes = "获取年级下的章节信息", produces = "application/json")
-    @GetMapping("/getChapterByGrade/{gradeId}")
-    public R<List<Chapter>> getChapterByGrade(@PathVariable(value = "gradeId") Long gradeId) {
-        return R.ok(chapterService.list(Wrappers.<Chapter>lambdaQuery().eq(Chapter::getGradeId, gradeId)));
-    }
+
 
 
 }
