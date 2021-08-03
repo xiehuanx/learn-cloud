@@ -21,6 +21,14 @@ import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 public interface IWxUserInfoService extends IService<WxUserInfo> {
 
     /**
+     * 登陆接口
+     *
+     * @param logInReqDto
+     * @return
+     */
+    LogInResDto loginToken(LogInReqDto logInReqDto);
+
+    /**
      * accessToken
      *
      * @param wxOAuth2UserInfo

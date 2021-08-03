@@ -16,6 +16,7 @@ import com.icedevcloud.cp.dto.order.ActivityOrderByPageReqDto;
 import com.icedevcloud.cp.dto.order.ActivityOrderByPageRespDto;
 import com.icedevcloud.cp.dto.order.WxUserInfoPageReqDto;
 import com.icedevcloud.miniapp.dto.WxUserInfoReqDto;
+import com.icedevcloud.miniapp.dto.auth.LogInReqDto;
 import com.icedevcloud.miniapp.dto.auth.LogInResDto;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,40 @@ public class WxUserInfoServiceImpl extends ServiceImpl<WxUserInfoMapper, WxUserI
             wxUserInfo.setCityAreaCodeStr(BaseAreaController.map.get(split[0]) + "-" + BaseAreaController.map.get(split[1]));
             wxUserInfo.setAreaCodeStr(BaseAreaController.map.get(wxUserInfo.getAreaCode()));
         }
+        logInResDto.setWxUserInfo(wxUserInfo);
+        return logInResDto;
+    }
+
+    @Override
+    public LogInResDto loginToken(LogInReqDto logInReqDto) {
+        WxUserInfo wxUserInfo = this.getOne(Wrappers.<WxUserInfo>
+                lambdaQuery().eq(WxUserInfo::getOpenId, logInReqDto.getOpenId())
+        );
+        if (wxUserInfo == null) {
+            wxUserInfo = new WxUserInfo();
+            wxUserInfo.setOpenId(logInReqDto.getOpenId());
+            wxUserInfo.setUnionId(logInReqDto.getUnionId());
+            wxUserInfo.setNickName(logInReqDto.getNickname());
+            wxUserInfo.setAvatarUrl(logInReqDto.getAvatarUrl());
+            wxUserInfo.setGender(Integer.parseInt(logInReqDto.getGender()));
+            wxUserInfo.setCountry(logInReqDto.getCountry());
+            wxUserInfo.setCity(logInReqDto.getCity());
+            wxUserInfo.setProvince(logInReqDto.getProvince());
+            wxUserInfo.setLanguage(logInReqDto.getLanguage());
+        } else {
+            wxUserInfo.setUnionId(logInReqDto.getUnionId());
+            wxUserInfo.setNickName(logInReqDto.getNickname());
+            wxUserInfo.setAvatarUrl(logInReqDto.getAvatarUrl());
+            wxUserInfo.setGender(Integer.parseInt(logInReqDto.getGender()));
+            wxUserInfo.setCountry(logInReqDto.getCountry());
+            wxUserInfo.setCity(logInReqDto.getCity());
+            wxUserInfo.setProvince(logInReqDto.getProvince());
+            wxUserInfo.setLanguage(logInReqDto.getLanguage());
+        }
+        this.saveOrUpdate(wxUserInfo);
+        String token = iTokenManager.getToken(wxUserInfo);
+        LogInResDto logInResDto = new LogInResDto();
+        logInResDto.setToken(token);
         logInResDto.setWxUserInfo(wxUserInfo);
         return logInResDto;
     }
