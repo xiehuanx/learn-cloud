@@ -30,8 +30,8 @@ mybatis-plus:
 wx:
   mp:
     configs:
-      - appId: wx88c75ddb7c18587e # 第一个公众号的appid
-        secret: 930b82455f57ef4fb5d45f9536166f06 # 公众号的appsecret
+      - appId: wxd21e6ebff222d813 # 第一个公众号的appid
+        secret: 650eb045a499f0a58ce83f802ec04dc7 # 公众号的appsecret
         token: 111 # 接口配置里的Token值
         aesKey: 111 # 接口配置里的EncodingAESKey值
   miniapp:
